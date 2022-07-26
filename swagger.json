@@ -1,0 +1,526 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Airstation-Node",
+        "description": "Node.js and Express.js Application API",
+        "license": {
+            "name": "Node",
+            "url": "https://node.com/"
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth"
+        },
+        {
+            "name": "Upload"
+        }
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "Authorization"
+        }
+    },
+    "security": [
+        {
+            "Bearer": []
+        }
+    ],
+    "paths": {
+        "/auth/signup": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Signup API",
+                "security": [],
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "body",
+                        "description": "Create new account",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/SignUp"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create new post",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "_id": {
+                                                    "type": "string"
+                                                },
+                                                "firstName": {
+                                                    "type": "string"
+                                                },
+                                                "lastName": {
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "role": {
+                                                    "type": "string"
+                                                },
+                                                "token": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/signin": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login API",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "body",
+                        "description": "Login account",
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "email",
+                                "password"
+                            ],
+                            "properties": {
+                                "email": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login account",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/LoginResponse"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/list": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Get All User Details API",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all post",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "_id": {
+                                                    "type": "string"
+                                                },
+                                                "firstName": {
+                                                    "type": "string"
+                                                },
+                                                "lastName": {
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "role": {
+                                                    "type": "string"
+                                                },
+                                                "token": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/tuneUpload": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "MP3 Upload API",
+                "parameters": [
+                    {
+                        "name": "audio",
+                        "in": "formData",
+                        "type": "file",
+                        "description": "MP3 upload file"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Upload new MP3 File",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "fieldname": {
+                                            "type": "string"
+                                        },
+                                        "originalname": {
+                                            "type": "string"
+                                        },
+                                        "encoding": {
+                                            "type": "string"
+                                        },
+                                        "mimetype": {
+                                            "type": "string"
+                                        },
+                                        "destination": {
+                                            "type": "string"
+                                        },
+                                        "filename": {
+                                            "type": "string"
+                                        },
+                                        "path": {
+                                            "type": "string"
+                                        },
+                                        "size": {
+                                            "type": "string"
+                                        },
+                                        "bucket": {
+                                            "type": "string"
+                                        },
+                                        "key": {
+                                            "type": "string"
+                                        },
+                                        "acl": {
+                                            "type": "string"
+                                        },
+                                        "contentType": {
+                                            "type": "string"
+                                        },
+                                        "contentDisposition": {
+                                            "type": "string"
+                                        },
+                                        "contentEncoding": {
+                                            "type": "string"
+                                        },
+                                        "storageClass": {
+                                            "type": "string"
+                                        },
+                                        "serverSideEncryption": {
+                                            "type": "string"
+                                        },
+                                        "metadata": {
+                                            "type": "string"
+                                        },
+                                        "location": {
+                                            "type": "string"
+                                        },
+                                        "etag": {
+                                            "type": "string"
+                                        },
+                                        "versionId": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/videoUpload": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "MP4 Upload API",
+                "parameters": [
+                    {
+                        "name": "video",
+                        "in": "formData",
+                        "type": "file",
+                        "description": "MP4 upload file",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/VideoUpload"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Upload new MP4 File",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "fieldname": {
+                                            "type": "string"
+                                        },
+                                        "originalname": {
+                                            "type": "string"
+                                        },
+                                        "encoding": {
+                                            "type": "string"
+                                        },
+                                        "mimetype": {
+                                            "type": "string"
+                                        },
+                                        "destination": {
+                                            "type": "string"
+                                        },
+                                        "filename": {
+                                            "type": "string"
+                                        },
+                                        "path": {
+                                            "type": "string"
+                                        },
+                                        "size": {
+                                            "type": "string"
+                                        },
+                                        "bucket": {
+                                            "type": "string"
+                                        },
+                                        "key": {
+                                            "type": "string"
+                                        },
+                                        "acl": {
+                                            "type": "string"
+                                        },
+                                        "contentType": {
+                                            "type": "string"
+                                        },
+                                        "contentDisposition": {
+                                            "type": "string"
+                                        },
+                                        "contentEncoding": {
+                                            "type": "string"
+                                        },
+                                        "storageClass": {
+                                            "type": "string"
+                                        },
+                                        "serverSideEncryption": {
+                                            "type": "string"
+                                        },
+                                        "metadata": {
+                                            "type": "string"
+                                        },
+                                        "location": {
+                                            "type": "string"
+                                        },
+                                        "etag": {
+                                            "type": "string"
+                                        },
+                                        "versionId": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "SignUp": {
+            "required": [
+                "firstName",
+                "lastName",
+                "email",
+                "password",
+                "role"
+            ],
+            "properties": {
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                }
+            }
+        },
+        "LoginResponse": {
+            "properties": {
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "object",
+                    "properties": {
+                        "_id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "TuneUpload": {
+            "properties": {
+                "fieldname": {
+                    "type": "string"
+                },
+                "originalname": {
+                    "type": "string"
+                },
+                "encoding": {
+                    "type": "string"
+                },
+                "mimetype": {
+                    "type": "string"
+                },
+                "destination": {
+                    "type": "string"
+                },
+                "filename": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "size": {
+                    "type": "string"
+                }
+            }
+        },
+        "VideoUpload": {
+            "properties": {
+                "video": {
+                    "fieldname": {
+                        "type": "string"
+                    },
+                    "originalname": {
+                        "type": "string"
+                    },
+                    "encoding": {
+                        "type": "string"
+                    },
+                    "mimetype": {
+                        "type": "string"
+                    },
+                    "destination": {
+                        "type": "string"
+                    },
+                    "filename": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    },
+                    "size": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
